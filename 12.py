@@ -27,6 +27,7 @@ for line in input:
     edges.append(line.split("-"))
 # print(edges)
 
+
 def move(cave, visited):
     # print(cave)
     visits = visited[:]
