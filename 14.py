@@ -150,19 +150,15 @@ for i in range(len(poly)-1):
 # print(pairs)
 print(pairs)
 
-
 for i in range(40):
     newpairs = defaultdict(list, {k: 0 for k in allpairs})
     for pair in pairs.keys():
         for new in newrules[pair]:
             newpairs[new] += pairs[pair]
     pairs = newpairs
-    print(pairs)
-
-# print(pairs)
 
 dict = defaultdict(list,{k:0 for k in legit})
-# print(dict)
+
 for pair in pairs.keys():
     dict[pair[0]] += pairs[pair]
     dict[pair[1]] += pairs[pair]
@@ -170,6 +166,14 @@ dict["N"] += 1
 dict["B"] += 1
 print(dict)
 
+max = 0
+min = 99999999999999999999999999
+for count in dict.values():
+    if count > max:
+        max = count
+    if count < min and count != 0:
+        min = count
+print((max-min)/2)
 
 # for char in poly:
 #     dict[char] += 1
@@ -189,15 +193,3 @@ print(dict)
 #                     # print(newpoly)
 #         # print(step, len(poly))
 #         poly = newpoly
-
-
-max = 0
-min = 99999999999999999999999999
-for count in dict.values():
-    if count > max:
-        max = count
-    if count < min and count != 0:
-        min = count
-print((max-min)/2)
-
-# def check(poly, round, index):
