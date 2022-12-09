@@ -2018,70 +2018,48 @@ D 13""".splitlines()
 # U 20""".splitlines()
 
 from numpy import sign
-
-def move(dir):
-    global head, tail
-    if dir == 'R':
-        if head[0] > tail[0]:
-            tail[1] = head[1]
-            tail[0] +=1
-        head[0] += 1
-
-    if dir == 'L':
-        if head[0] < tail[0]:
-            tail[1] = head[1]
-            tail[0] -= 1
-        head[0] -= 1
-        
-    if dir == 'U':
-        if head[1] > tail[1]:
-            tail[0] = head[0]
-            tail[1] +=1
-        head[1] += 1
-
-    if dir == 'D':
-        if head[1] < tail[1]:
-            tail[0] = head[0]
-            tail[1] -= 1
-        head[1] -= 1
     
-def move_long(dir):
-    global rope
+def move(dir):
+    global short_rope, long_rope
     if dir == 'R':
-        rope[0][0] += 1
+        short_rope[0][0] += 1
+        long_rope[0][0] += 1
     if dir == 'L':
-        rope[0][0] -= 1
+        short_rope[0][0] -= 1
+        long_rope[0][0] -= 1
     if dir == 'U':
-        rope[0][1] += 1
+        short_rope[0][1] += 1
+        long_rope[0][1] += 1
     if dir == 'D':
-        rope[0][1] -= 1
-    for i in range(1, 10):
-            if abs(rope[i-1][0] - rope[i][0]) > 1 or abs(rope[i-1][1] - rope[i][1]) > 1:
-                rope[i][1] += sign(rope[i-1][1] - rope[i][1])
-                rope[i][0] += sign(rope[i-1][0] - rope[i][0])
+        short_rope[0][1] -= 1
+        long_rope[0][1] -= 1
+    for i in range(1, len(short_rope)):
+            if abs(short_rope[i-1][0] - short_rope[i][0]) > 1 or abs(short_rope[i-1][1] - short_rope[i][1]) > 1:
+                short_rope[i][1] += sign(short_rope[i-1][1] - short_rope[i][1])
+                short_rope[i][0] += sign(short_rope[i-1][0] - short_rope[i][0])
+    for i in range(1, len(long_rope)):
+            if abs(long_rope[i-1][0] - long_rope[i][0]) > 1 or abs(long_rope[i-1][1] - long_rope[i][1]) > 1:
+                long_rope[i][1] += sign(long_rope[i-1][1] - long_rope[i][1])
+                long_rope[i][0] += sign(long_rope[i-1][0] - long_rope[i][0])
 
-head = [0, 0]
-tail = [0, 0]
-places = [(0, 0)]
-
-rope = [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]]
-places_long = [(0, 0)]
+short_rope = [[0, 0], [0, 0]]
+short_places = [(0, 0)]
+long_rope = [[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0],[0, 0]]
+long_places = [(0, 0)]
 
 for command in input:
     direction, count = command.split(' ')
     for k in range(int(count)):
         move(direction)
-        move_long(direction)
-        places.append(tuple(tail))
-        places_long.append(tuple(rope[-1]))
-#         print(command, rope)
-print(len(set(places)))
-print(len(set(places_long)))
-# for i in range(-6, 15):
+        (direction)
+        short_places.append(tuple(short_rope[-1]))
+        long_places.append(tuple(long_rope[-1]))
+print(len(set(short_places)))
+print(len(set(long_places)))
+# for i in range(-6, 15, -1):
 #     for j in range(-10, 15):
 #         if (i, j) in places_long:
 #             print("#", end='')
 #         else:
 #             print('.', end='')
 #     print('')
-# print(places_long)
