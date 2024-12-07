@@ -1037,50 +1037,15 @@ input = """16 19 21 24 21
 #B
 safe_count = 0
 for i, report in enumerate(input):
-    # if i < 491:
-    #     print ("starting report " + str(i+1))
-    lastlevel = -1
-    increasing = True
-    decreasing = True
-    safe = True
-    removed = False
-    tryagain = False
-    for j, lev in enumerate(report.split()):
-        level = int(lev)
-        if lastlevel != -1:
-            if increasing:
-                if level == lastlevel + 1 or level == lastlevel + 2 or level == lastlevel + 3:
-                    pass
-                else:
-                    if not decreasing and not removed:
-                        removed = True
-                        removedlevel = j+1
-                        continue
-                    else:
-                        increasing = False
-            if decreasing:
-                if level == lastlevel - 1 or level == lastlevel - 2 or level == lastlevel - 3:
-                    pass
-                else:
-                    if not increasing and not removed:
-                        removed = True
-                        removedlevel = j+1
-                        continue
-                    else:
-                        decreasing = False
-        lastlevel = level
-        if not decreasing and not increasing and removed:
-            safe = False
-            if i < 500:
-                print(str(i+1) + " report UNSAFE with level " + str(removedlevel) + " removed")
-            tryagain = True
-            break
-    if tryagain:
+    safe = False
+    for removed_index in range(len(report.split())):
+        newlist = report.split()
+        newlist.pop(removed_index)
         lastlevel = -1
         increasing = True
         decreasing = True
-        safe = True
-        for lev in report.split()[1:]:
+        gucci = True
+        for lev in newlist:
             level = int(lev)
             if lastlevel != -1:
                 if increasing:
@@ -1095,10 +1060,12 @@ for i, report in enumerate(input):
                         decreasing = False
             lastlevel = level
             if not decreasing and not increasing:
-                safe = False
+                gucci = False
                 break
+        if gucci:
+            safe = True
+            break
     if safe:
         safe_count += 1
-        # if i < 500:
-            # print(str(i + 1) + " report safe")
+
 print(safe_count)
