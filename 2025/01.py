@@ -1,5 +1,6 @@
 inputfile = open("01.txt", "r")
 input = inputfile.read()
+inputfile.close()
 
 # input = """L68
 # L30
@@ -44,4 +45,3 @@ for line in input:
     print (line, "->", counter, pwb)
 print(pwa)
 print(pwb)
-    
